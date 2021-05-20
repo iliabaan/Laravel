@@ -1,6 +1,9 @@
 <?php
 
+use App\Http\Controllers\NewsController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\Admin\NewsController as AdminNewsController;
+use App\Http\Controllers\Admin\CategoryController as AdminCategoryController;
 
 /*
 |--------------------------------------------------------------------------
@@ -17,14 +20,26 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('/hello/{name}', function ($name) {
-    return '<h1 style="text-align: center">' . 'Hello, ' . $name . '</h1>';
-});
+/**
+ * News Routing
+ */
 
-Route::get('/about/', function () {
-    return '<h1 style="text-align: center">' . 'About' . '</h1>';
-});
+Route::get('/news', [NewsController::class, 'index'])
+    ->name('news');
 
-Route::get('/news/', function () {
-    return '<h1 style="text-align: center">' . 'News' . '</h1>';
+Route::get('/news/{id}', [NewsController::class, 'show'])
+    ->where('id', '\d+')
+    ->name('news.showNews');
+
+Route::get('/news/by_categories/{id}', [NewsController::class, 'by_categories'])
+    ->where('id', '\d+')
+    ->name('news.by_categories');
+
+/**
+ * Admin Routing
+ */
+
+Route::group(['prefix' => 'admin'], function () {
+    Route::resource('/category', AdminCategoryController::class);
+    Route::resource('/news', AdminNewsController::class);
 });
