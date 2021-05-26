@@ -14,5 +14,33 @@
             </button>
         </div>
     </div>
+    <div class="album py-5 bg-light">
+        <div class="container">
+
+            <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
+                @foreach($newsList as $key => $news)
+
+                    <div class="col">
+                        <div class="card shadow-sm">
+                            <svg class="bd-placeholder-img card-img-top" width="100%" height="225"
+                                 xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: Thumbnail"
+                                 preserveAspectRatio="xMidYMid slice" focusable="false">
+                                <rect width="100%" height="100%" fill="#55595c"/>
+                                <text x="50%" y="50%" fill="#eceeef" dy=".3em">Новость {{ $key }}</text>
+                            </svg>
+
+                            <div class="card-body">
+                                <p class="card-text">{{ $news['content'] }}</p>
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <div class="btn-group">
+                                        <a href="{{ route('news.show', $key) }}" class="btn btn-sm btn-outline-secondary">Смотреть</a>
+                                        <a href="{{ route('news.edit', $key) }}" class="btn btn-sm btn-outline-secondary">Изменить</a>
+                                    </div>
+                                    <small class="text-muted">Дата добавления: <br> {{ now()->format('d.m.y H:m') }}</small>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+    @endforeach
 @endsection
 
