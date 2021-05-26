@@ -17,7 +17,8 @@ class NewsController extends Controller
     public function show(int $id)
     {
         return view('news.show', [
-            'news' => $this->newsList[$id]
+            'news' => $this->newsList[$id],
+            'newsCategories' => $this->newsCategory
         ]);
     }
 
@@ -25,7 +26,8 @@ class NewsController extends Controller
     {
         return view('news.by_categories', [
             'category' => $this->newsCategory[$id],
-            'newsList' => $this->newsList
+            'newsList' => $this->newsList,
+            'newsCategories' => $this->newsCategory
         ]);
     }
 }
