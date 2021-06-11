@@ -36,7 +36,6 @@
             <textarea name="comment" id="comment" class="row-cols-5 border-2" placeholder="Комментарий" value="{{ @old('comment') }}"></textarea>
             <button type="input" class="form-control-sm bg-white mt-2">Отправить комментарий</button>
         </form>
->>>>>>> Stashed changes
     </div>
 @endsection
 

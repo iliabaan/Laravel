@@ -8,7 +8,7 @@
 
 
     <!-- Bootstrap core CSS -->
-    <link href="https://getbootstrap.com/docs/5.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="{{ asset('assets/bootstrap.css') }}" rel="stylesheet">
     <style>
         .bd-placeholder-img {
             font-size: 1.125rem;
@@ -71,6 +71,7 @@
                     @foreach($newsCategories as $category)
                        <span style="color: #a0aec0">/</span> <a href="{{ route('news.by_categories', ['id' => $category->id]) }}">{{$category->title}}</a>
                     @endforeach
+                    <span style="color: #a0aec0">/ </span><a href="{{ route('news.order') }}">Заказ</a>
                 </div>
             </a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarHeader"
