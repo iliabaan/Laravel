@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\News;
 use Illuminate\Http\Request;
 
 class NewsController extends Controller
@@ -14,8 +15,10 @@ class NewsController extends Controller
      */
     public function index()
     {
+        $news = new News();
+        $newsList = $news->newsList();
         return view('admin.news.index', [
-            'newsList' => $this->newsList
+            'newsList' => $newsList
         ]);
     }
 
@@ -48,8 +51,10 @@ class NewsController extends Controller
      */
     public function show(int $id)
     {
+        $news = new News();
+        $newsOne = $news->news($id);
         return view('admin.news.show', [
-            'news' => $this->newsList[$id],
+            'news' => $newsOne,
         ]);
 
     }
@@ -62,9 +67,10 @@ class NewsController extends Controller
      */
     public function edit(int $id)
     {
+        $news = new News();
+        $newsOne = $news->news($id);
         return view('admin.news.edit', [
-            'id' => $id,
-            'news' => $this->newsList[$id]
+            'news' => $newsOne,
         ]);
     }
 
@@ -84,10 +90,14 @@ class NewsController extends Controller
      * Remove the specified resource from storage.
      *
      * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View|\Illuminate\Http\Response
      */
     public function destroy($id)
     {
-        //
+        $news = new News();
+        $newsOne = $news->news($id);
+        return view('admin.news.destroy', [
+            'news' => $newsOne,
+        ]);
     }
 }

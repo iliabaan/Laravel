@@ -68,8 +68,8 @@
                 </svg>
                 <div>
                 <a href="{{ route('news') }}">Все новости</a>
-                    @foreach($newsCategories as $key => $category)
-                       <span style="color: #a0aec0">/</span> <a href="{{ route('news.by_categories', ['id' => $key]) }}">{{$category}}</a>
+                    @foreach($newsCategories as $category)
+                       <span style="color: #a0aec0">/</span> <a href="{{ route('news.by_categories', ['id' => $category->id]) }}">{{$category->title}}</a>
                     @endforeach
                     <span style="color: #a0aec0">/ </span><a href="{{ route('news.order') }}">Заказ</a>
                 </div>
