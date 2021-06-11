@@ -18,7 +18,8 @@ class NewsController extends Controller
     {
         return view('news.show', [
             'news' => $this->newsList[$id],
-            'newsCategories' => $this->newsCategory
+            'newsCategories' => $this->newsCategory,
+            'comments' => $this->comments($id)
         ]);
     }
 
@@ -29,5 +30,11 @@ class NewsController extends Controller
             'newsList' => $this->newsList,
             'newsCategories' => $this->newsCategory
         ]);
+    }
+
+    public function order()
+    {
+        return view('news.order',
+        ['newsCategories' => $this->newsCategory]);
     }
 }
