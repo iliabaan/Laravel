@@ -17,7 +17,7 @@ class CreateCommentsTable extends Migration
             $table->id();
             $table->string('user_name', 100);
             $table->text('content')->nullable();
-            $table->foreignId('news_id')->constrained();
+            $table->foreignId('news_id')->constrained()->onDelete('cascade');
             $table->boolean('is_hidden')->default(false);
             $table->timestamps();
         });

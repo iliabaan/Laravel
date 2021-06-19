@@ -3,8 +3,11 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\Category;
 use App\Models\News;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use function Couchbase\basicDecoderV1;
 
 class NewsController extends Controller
 {
@@ -15,10 +18,8 @@ class NewsController extends Controller
      */
     public function index()
     {
-        $news = new News();
-        $newsList = $news->newsList();
         return view('admin.news.index', [
-            'newsList' => $newsList
+            'newsList' => News::all()->sortByDesc('created_at')
         ]);
     }
 
@@ -29,18 +30,26 @@ class NewsController extends Controller
      */
     public function create()
     {
-        return view('admin.news.create');
+        return view('admin.news.create', [
+            'categories' => Category::all()
+        ]);
     }
 
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * @param Request $request
+     * @return RedirectResponse
      */
     public function store(Request $request)
     {
-        //
+        $fields = $request->only('category_id', 'title', 'content', 'image', 'status');
+
+        $news = new News();
+        $news->fill($fields)->save();
+        if ($news) {
+            return redirect()->route('news.index');
+        }
     }
 
     /**
@@ -51,10 +60,8 @@ class NewsController extends Controller
      */
     public function show(int $id)
     {
-        $news = new News();
-        $newsOne = $news->news($id);
         return view('admin.news.show', [
-            'news' => $newsOne,
+            'news' => News::find($id),
         ]);
 
     }
@@ -65,39 +72,46 @@ class NewsController extends Controller
      * @param int $id
      * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View|\Illuminate\Http\Response
      */
-    public function edit(int $id)
+    public function edit(News $news)
     {
-        $news = new News();
-        $newsOne = $news->news($id);
         return view('admin.news.edit', [
-            'news' => $newsOne,
+            'news' => $news,
+            'categories' => Category::all()
         ]);
     }
 
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @param Request $request
+     * @param News $news
+     * @return RedirectResponse
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, News $news): RedirectResponse
     {
-        //
+        $fields = $request->only('category_id', 'title', 'content', 'image', 'status');
+
+        $news = $news->fill($fields)->save();
+        if ($news) {
+            return redirect()->route('news.index');
+        }
+
+
+        return back();
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
-     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View|\Illuminate\Http\Response
+     * @param News $news
+     * @return RedirectResponse
      */
-    public function destroy($id)
+    public function destroy(News $news): RedirectResponse
     {
-        $news = new News();
-        $newsOne = $news->news($id);
-        return view('admin.news.destroy', [
-            'news' => $newsOne,
-        ]);
+        if ($news->delete()) {
+            $news->status = 'delete';
+            $news->save();
+        }
+        return redirect()->route('news.index');
     }
 }

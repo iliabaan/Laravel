@@ -10,7 +10,7 @@
         </svg>
         <div class="mt-5">
             <h3>{{ $news->title }}</h3>
-            <p class="text-muted">Категория: {{ $news->category_title }}</p>
+            <p class="text-muted">Категория: {{ $news->category->title }}</p>
             <p class="fs-5">{{ $news->content }}</p>
         </div>
     </div>
@@ -29,12 +29,12 @@
         </div>
         <form action="/addComment" method="post" class="input-group m-auto mt-5 flex-column">
             @csrf
-            <input type="hidden" name="id" value="{{ $news->id }}">
-            <label for="name">Ваше имя *</label>
-            <input type="text" class="form-control-sm" name="name" placeholder="Ваше имя" aria-label="Username" value="{{ @old('name') }}">
-            <label for="comment"> Ваш комментарий *</label>
-            <textarea name="comment" id="comment" class="row-cols-5 border-2" placeholder="Комментарий" value="{{ @old('comment') }}"></textarea>
-            <button type="input" class="form-control-sm bg-white mt-2">Отправить комментарий</button>
+            <input type="hidden" name="news_id" value="{{ $news->id }}">
+            <label for="user_name">Ваше имя *</label>
+            <input type="text" class="form-control-sm" name="user_name" placeholder="Ваше имя" aria-label="Username" value="{{ @old('name') }}">
+            <label for="content"> Ваш комментарий *</label>
+            <textarea name="content" id="content" class="row-cols-5 border-2" placeholder="Комментарий">{{ @old('comment') }}</textarea>
+            <button type="submit" class="form-control-sm bg-white mt-2">Отправить комментарий</button>
         </form>
     </div>
 @endsection

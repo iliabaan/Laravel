@@ -29,7 +29,7 @@ Route::get('/', function () {
 Route::get('/news', [NewsController::class, 'index'])
     ->name('news');
 
-Route::get('/news/{id}', [NewsController::class, 'show'])
+Route::get('/news/{news}', [NewsController::class, 'show'])
     ->where('id', '\d+')
     ->name('news.showNews');
 

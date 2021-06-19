@@ -11,55 +11,35 @@ class NewsController extends Controller
 {
     public function index(Request $request)
     {
-        $news = new News();
-        $category = new Category();
-        $newsList = $news->newsList();
-        $categoriesList =$category->categoriesList();
-
         return view('news.index', [
-            'newsList' => $newsList,
-            'newsCategories' => $categoriesList
+            'newsList' => News::where(['status' => 'published'])
+                ->with('category')
+                ->get(),
+            'newsCategories' => Category::all()
         ]);
     }
 
-    public function show(int $id)
+    public function show($id)
     {
-        $news = new News();
-        $newsOne = $news->news($id);
-
-        $category = new Category();
-        $categoriesList = $category->categoriesList();
-
-        $comment = new Comment();
-        $commentsList = $comment->commentsById($id);
-
         return view('news.show', [
-            'news' => $newsOne,
-            'newsCategories' => $categoriesList,
-            'comments' => $commentsList
+            'news' => News::find($id),
+            'newsCategories' => Category::all(),
+            'comments' => Comment::where(['news_id' => $id])->get()
         ]);
     }
 
     public function by_categories(int $id)
     {
-        $news = new News();
-        $category = new Category();
-        $newsList = $news->newsByCategories($id);
-        $categoryOne = $category->category($id);
-        $categoriesList = $category->categoriesList();
-
         return view('news.by_categories', [
-            'category' => $categoryOne,
-            'newsList' => $newsList,
-            'newsCategories' => $categoriesList
+            'category' => Category::find($id),
+            'newsList' => News::where(['category_id' => $id])->get(),
+            'newsCategories' => Category::all()
         ]);
     }
 
     public function order()
     {
-        $category = new Category();
-        $categoriesList = $category->categoriesList();
         return view('news.order',
-        ['newsCategories' => $categoriesList]);
+        ['newsCategories' => Category::all()]);
     }
 }

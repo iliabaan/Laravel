@@ -22,7 +22,7 @@ class CommentsSeeder extends Seeder
         $data = [];
         $faker = Factory::create();
 
-        for ($i=0; $i < 99; $i++) {
+        for ($i=0; $i < 100; $i++) {
             $data[] = [
                 'user_name' => $faker->name(),
                 'content' => $faker->text(150),

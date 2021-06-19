@@ -21,12 +21,14 @@ class NewsSeeder extends Seeder
     public function getData(): array {
         $data = [];
         $faker = Factory::create();
+        $statuses = ['draft', 'published'];
 
-        for ($i=0; $i < 10; $i++) {
+        for ($i=0; $i < 50; $i++) {
             $data[] = [
                 'title' => $faker->sentence(mt_rand(3, 10)),
-                'category_id' => mt_rand(1, 5),
+                'category_id' => mt_rand(1, 10),
                 'content' => $faker->text(150),
+                'status' => $statuses[mt_rand(0,1)],
                 'created_at' => now(),
                 'updated_at' => now()
             ];

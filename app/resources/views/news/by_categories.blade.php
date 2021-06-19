@@ -1,6 +1,7 @@
 @extends('layouts.main')
 @section('title') {{ $category->title }} @parent @stop
 @section('content')
+
     <section class="py-5 text-center container">
         <div class="row py-lg-5">
             <div class="col-lg-6 col-md-8 mx-auto">
@@ -9,7 +10,6 @@
             </div>
         </div>
     </section>
-
     <div class="album py-5 bg-light">
         <div class="container">
 
@@ -25,10 +25,10 @@
                             </svg>
 
                             <div class="card-body">
-                                <p class="card-text text-muted">Категория: {{ $news->category_title }}</p>
+                                <p class="card-text text-muted">Категория: {{ $category->title }}</p>
                                 <div class="d-flex justify-content-between align-items-center">
                                     <div class="btn-group">
-                                        <a href="{{ route('news.showNews', ['id' => $news->id]) }}" class="btn btn-sm btn-outline-secondary">Смотреть</a>
+                                        <a href="{{ route('news.showNews', ['news' => $news->id]) }}" class="btn btn-sm btn-outline-secondary">Смотреть</a>
                                     </div>
                                     <small class="text-muted">Дата добавления: {{ $news->created_at }}</small>
                                 </div>
