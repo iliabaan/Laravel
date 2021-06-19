@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\CreateNews;
 use App\Models\Category;
 use App\Models\News;
 use Illuminate\Http\RedirectResponse;
@@ -38,10 +39,10 @@ class NewsController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param Request $request
+     * @param CreateNews $request
      * @return RedirectResponse
      */
-    public function store(Request $request)
+    public function store(CreateNews $request): RedirectResponse
     {
         $fields = $request->only('category_id', 'title', 'content', 'image', 'status');
 
@@ -49,7 +50,7 @@ class NewsController extends Controller
         $news->fill($fields)->save();
         if ($news) {
             return redirect()->route('news.index');
-        }
+        } else return back();
     }
 
     /**
@@ -95,8 +96,6 @@ class NewsController extends Controller
         if ($news) {
             return redirect()->route('news.index');
         }
-
-
         return back();
     }
 

@@ -10,7 +10,7 @@
         </svg>
         <div class="mt-5">
             <h3>{{ $news->title }}</h3>
-            <p class="text-muted">Категория: {{ $news->category->title }}</p>
+            <p class="muted h6">Категория: {{$news->category->title}}</p>
             <p class="fs-5">{{ $news->content }}</p>
         </div>
     </div>
@@ -20,8 +20,8 @@
             @forelse($comments as $comment)
                 <div class="bg-light p-1 m-2">
                     <p>Имя: <span class="fw-bold">{{ $comment->user_name }}</span></p>
-                <p>Комментарий: {{ $comment->content }}</p>
-                <p>Дата: {{ $comment->created_at }}</p>
+                    <p>Комментарий: {{ $comment->content }}</p>
+                    <p>Дата: {{ $comment->created_at }}</p>
                 </div>
             @empty
                 <p>Нет комментариев</p>
@@ -29,11 +29,27 @@
         </div>
         <form action="/addComment" method="post" class="input-group m-auto mt-5 flex-column">
             @csrf
+            @if($errors->has('user_name'))
+                <div class="alert alert-danger mt-2">
+                    @foreach($errors->get('user_name') as $error)
+                        <p class="mb-0">{{ $error }}</p>
+                    @endforeach
+                </div>
+            @endif
             <input type="hidden" name="news_id" value="{{ $news->id }}">
             <label for="user_name">Ваше имя *</label>
-            <input type="text" class="form-control-sm" name="user_name" placeholder="Ваше имя" aria-label="Username" value="{{ @old('name') }}">
+            <input type="text" class="form-control-sm" name="user_name" placeholder="Ваше имя" aria-label="Username"
+                   value="{{ @old('name') }}">
+            @if($errors->has('content'))
+                <div class="alert alert-danger mt-2">
+                    @foreach($errors->get('content') as $error)
+                        <p class="mb-0">{{ $error }}</p>
+                    @endforeach
+                </div>
+            @endif
             <label for="content"> Ваш комментарий *</label>
-            <textarea name="content" id="content" class="row-cols-5 border-2" placeholder="Комментарий">{{ @old('comment') }}</textarea>
+            <textarea name="content" id="content" class="row-cols-5 border-2"
+                      placeholder="Комментарий">{!! @old('comment') !!}</textarea>
             <button type="submit" class="form-control-sm bg-white mt-2">Отправить комментарий</button>
         </form>
     </div>

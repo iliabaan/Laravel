@@ -1,7 +1,8 @@
 @extends('layouts.admin')
 @section('title') {{ $news->title }} @parent @stop
 @section('content')
-    <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+    <div
+        class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
         <h1 class="h2">{{ $news->title }}</h1>
         <p class="muted h6">Категория: {{$news->category->title}}</p>
         <div class="btn-toolbar mb-2 mb-md-0">
