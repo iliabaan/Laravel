@@ -18,11 +18,12 @@ class CategoriesSeeder extends Seeder
         DB::table('categories')->insert($this->getData());
     }
 
-    public function getData(): array {
+    public function getData(): array
+    {
         $data = [];
         $faker = Factory::create();
 
-        for ($i=0; $i < 10; $i++) {
+        for ($i = 0; $i < 10; $i++) {
             $data[] = [
                 'title' => $faker->word(),
                 'description' => $faker->text(150),
@@ -30,6 +31,12 @@ class CategoriesSeeder extends Seeder
                 'updated_at' => now()
             ];
         }
+        array_push($data, [
+                'title' => 'Другое',
+                'description' => 'Стандартная категория',
+                'created_at' => now(),
+                'updated_at' => now()]
+        );
         return $data;
     }
 }

@@ -32,7 +32,7 @@ class NewsController extends Controller
     {
         return view('news.by_categories', [
             'category' => Category::find($id),
-            'newsList' => News::where(['category_id' => $id])->get(),
+            'newsList' => News::where(['category_id' => $id, 'status' => 'published'])->get(),
             'newsCategories' => Category::all()
         ]);
     }

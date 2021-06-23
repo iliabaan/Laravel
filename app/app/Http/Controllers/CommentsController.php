@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\CreateComment;
+use App\Http\Requests\CreateNews;
 use App\Models\Category;
 use App\Models\Comment;
 use App\Models\News;
@@ -35,10 +37,10 @@ class CommentsController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param Request $request
+     * @param CreateComment $request
      * @return RedirectResponse
      */
-    public function store(Request $request): RedirectResponse
+    public function store(CreateComment $request): RedirectResponse
     {
         $fields = $request->only('news_id', 'user_name', 'content');
 

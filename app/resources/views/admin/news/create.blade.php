@@ -26,10 +26,24 @@
                     <option value="{{ $category->id }}">{{ $category->title }}</option>
                 @endforeach
             </select>
+            @if($errors->has('category_id'))
+                <div class="alert alert-danger">
+                    @foreach($errors->get('category_id') as $error)
+                        <p>{{ $error }}</p>
+                    @endforeach
+                </div>
+            @endif
         </div>
         <div class="form-group">
             <label for="title">Заголовок *</label>
-            <input type="text" class="form-control" name="title" id="title">
+            <input type="text" class="form-control" name="title" id="title" value="{{ old('title') }}">
+            @if($errors->has('title'))
+                <div class="alert alert-danger mt-2">
+                    @foreach($errors->get('title') as $error)
+                        <p class="mb-0">{{ $error }}</p>
+                    @endforeach
+                </div>
+            @endif
         </div>
         <div class="form-group">
             <label for="image">Логотип</label>
@@ -37,7 +51,14 @@
         </div>
         <div class="form-group">
             <label for="content">Описание *</label>
-            <textarea class="form-control" name="content" id="content"></textarea>
+            <textarea class="form-control" name="content" id="content"> {!! old('content') !!}</textarea>
+            @if($errors->has('content'))
+                <div class="alert alert-danger mt-2">
+                    @foreach($errors->get('content') as $error)
+                        <p class="mb-0">{{ $error }}</p>
+                    @endforeach
+                </div>
+            @endif
         </div>
         <div class="form-group">
             <label for="status">Статус</label>

@@ -23,4 +23,14 @@ class News extends Model
         return $this->belongsTo(Category::class, 'category_id');
     }
 
+    public function changeDeletedCategory(Category $category): bool
+    {
+        $newsList = News::where(['category_id' => $category->id])->get();
+        $defaultCategoryId = Category::where(['title' => 'Другое'])->first()->id;
+        foreach ($newsList as $news) {
+            $news->update(['category_id' => $defaultCategoryId]);
+        }
+        return true;
+    }
+
 }
