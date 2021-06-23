@@ -9,6 +9,7 @@
 
     <!-- Bootstrap core CSS -->
     <link href="{{ asset('assets/bootstrap.css') }}" rel="stylesheet">
+    <script src="{{ asset('js/app.js') }}" defer></script>
     <style>
         .bd-placeholder-img {
             font-size: 1.125rem;
@@ -47,19 +48,43 @@
                         Then, link them off to some social networking sites or contact information.</p>
                 </div>
                 <div class="col-sm-4 offset-md-1 py-4">
-                    <h4 class="text-white">Contact</h4>
+                    <h4 class="text-white">Действия</h4>
                     <ul class="list-unstyled">
-                        <li><a href="{{ route('news.index') }}" class="text-white">Админка</a></li>
-                        <li><a href="{{ route('news') }}" class="text-white">Like on Facebook</a></li>
-                        <li><a href="#" class="text-white">Email me</a></li>
                     </ul>
+                    @guest
+                        @if (Route::has('login'))
+                            <li><a href="{{ route('login') }}" class="text-white">Вход</a></li>
+                        @endif
+
+                        @if (Route::has('register'))
+                                <li><a href="{{ route('register') }}" class="text-white">Регистрация</a></li>
+                        @endif
+                    @else
+                        <li class="nav-item dropdown">
+                            <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
+                                {{ Auth::user()->name }}
+                            </a>
+
+                            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                <a class="dropdown-item border-1" href="{{ route('logout') }}"
+                                   onclick="event.preventDefault();
+                                                     document.getElementById('logout-form').submit();">
+                                    {{ __('Logout') }}
+                                </a>
+
+                                <form id="logout-form" action="{{ route('logout') }}" method="POST">
+                                    @csrf
+                                </form>
+                            </div>
+                        </li>
+                    @endguest
                 </div>
             </div>
         </div>
     </div>
     <div class="navbar navbar-dark bg-dark shadow-sm">
         <div class="container">
-            <a href="#" class="navbar-brand d-flex align-items-center">
+            <a href="/" class="navbar-brand d-flex align-items-center">
                 <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="none" stroke="currentColor"
                      stroke-linecap="round" stroke-linejoin="round" stroke-width="2" aria-hidden="true" class="me-2"
                      viewBox="0 0 24 24">
@@ -69,7 +94,7 @@
                 <div>
                 <a href="{{ route('news') }}">Все новости</a>
                     @foreach($newsCategories as $category)
-                       <span style="color: #a0aec0">/</span> <a href="{{ route('news.by_categories', ['id' => $category->id]) }}">{{$category->title}}</a>
+                       <span style="color: #a0aec0">/</span> <a href="{{ route('news.by_categories', ['id' => $category->id]) }}">{{ucfirst($category->title)}}</a>
                     @endforeach
                     <span style="color: #a0aec0">/ </span><a href="{{ route('news.order') }}">Заказ</a>
                 </div>
