@@ -16,7 +16,7 @@ class CreateNewsTable extends Migration
         Schema::create('news', function (Blueprint $table) {
             $table->id();
             $table->string('title', 100);
-            $table->foreignId('category_id')->constrained();
+            $table->foreignId('category_id')->constrained()->onDelete('cascade');
             $table->text('content')->nullable();
             $table->text('image')->nullable();
             $table->boolean('is_hidden')->default(false);

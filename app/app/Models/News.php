@@ -4,37 +4,23 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Facades\DB;
 
 class News extends Model
 {
     use HasFactory;
+    use SoftDeletes;
 
     protected $table = 'news';
 
-    public function newsList(): \Illuminate\Support\Collection
-    {
-        return DB::table($this->table)
-            ->leftJoin('categories', 'category_id', '=', 'categories.id')
-            ->select(['news.id', 'news.title', 'news.content', 'categories.title as category_title', 'news.created_at'])
-            ->get();
+    protected $fillable = [
+        'category_id', 'title', 'image', 'content', 'status'
+    ];
+
+    public function category(): BelongsTo {
+        return $this->belongsTo(Category::class, 'category_id');
     }
 
-    public function newsByCategories(int $id): \Illuminate\Support\Collection
-    {
-        return DB::table($this->table)
-        ->leftJoin('categories', 'category_id', '=', 'categories.id')
-            ->select(['news.id', 'news.title', 'news.content', 'categories.title as category_title', 'news.created_at'])
-            ->where('category_id', '=', $id)
-            ->get();
-    }
-
-    public function news(int $id): object
-    {
-        return DB::table($this->table)
-            ->leftJoin('categories', 'category_id', '=', 'categories.id')
-            ->select(['news.id', 'news.title', 'news.content', 'categories.title as category_title', 'news.created_at'])
-            ->where('news.id', '=', $id)
-            ->first();
-    }
 }

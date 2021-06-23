@@ -8,6 +8,7 @@
     <!-- Bootstrap core CSS -->
     <link href="https://getbootstrap.com/docs/5.0/dist/css/bootstrap.min.css" rel="stylesheet">
 
+    <script src="/js/app.js" defer></script>
     <style>
         .bd-placeholder-img {
             font-size: 1.125rem;
