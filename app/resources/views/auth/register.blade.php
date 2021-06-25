@@ -66,6 +66,8 @@
                                 <button type="submit" class="btn btn-primary">
                                     {{ __('Register') }}
                                 </button>
+                                <a href="{{ Route('vkLogin') }}" class="btn btn-primary">Войти через ВК</a>
+
                             </div>
                         </div>
                     </form>
