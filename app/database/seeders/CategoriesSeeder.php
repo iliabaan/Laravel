@@ -20,17 +20,38 @@ class CategoriesSeeder extends Seeder
 
     public function getData(): array
     {
-        $data = [];
-        $faker = Factory::create();
-
-        for ($i = 0; $i < 10; $i++) {
-            $data[] = [
-                'title' => $faker->word(),
-                'description' => $faker->text(150),
+        $data = [
+            [
+                'title' => 'Спорт',
+                'description' => 'Спорт',
                 'created_at' => now(),
                 'updated_at' => now()
-            ];
-        }
+            ],
+            [
+                'title' => 'Музыка',
+                'description' => 'Музыка',
+                'created_at' => now(),
+                'updated_at' => now()
+            ],
+            [
+                'title' => 'Культура',
+                'description' => 'Культура',
+                'created_at' => now(),
+                'updated_at' => now()
+            ],
+            [
+                'title' => 'Бизнес',
+                'description' => 'Бизнес',
+                'created_at' => now(),
+                'updated_at' => now()
+            ],
+            [
+                'title' => 'Общество',
+                'description' => 'Общество',
+                'created_at' => now(),
+                'updated_at' => now()
+            ]
+        ];
         array_push($data, [
                 'title' => 'Другое',
                 'description' => 'Стандартная категория',

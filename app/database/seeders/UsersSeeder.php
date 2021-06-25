@@ -22,15 +22,26 @@ class UsersSeeder extends Seeder
         $data = [];
         $faker = Factory::create();
 
+        array_push($data, [
+            'name' => 'admin',
+            'email' => 'admin@admin.com',
+            'password' => password_hash('12345678', PASSWORD_DEFAULT),
+            'created_at' => now(),
+            'updated_at' => now(),
+            'is_admin' => true
+        ]);
+
         for ($i=0; $i < 10; $i++) {
             $data[] = [
                 'name' => $faker->name(),
                 'email' => $faker->freeEmail,
                 'password' => password_hash('12345678', PASSWORD_DEFAULT),
                 'created_at' => now(),
-                'updated_at' => now()
+                'updated_at' => now(),
+                'is_admin' => false
             ];
         }
+
         return $data;
     }
 }

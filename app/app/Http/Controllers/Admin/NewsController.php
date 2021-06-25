@@ -6,6 +6,10 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\CreateNews;
 use App\Models\Category;
 use App\Models\News;
+use Illuminate\Contracts\Foundation\Application;
+use Illuminate\Contracts\View\Factory;
+use Illuminate\Contracts\View\View;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use function Couchbase\basicDecoderV1;
@@ -15,7 +19,7 @@ class NewsController extends Controller
     /**
      * Display a listing of the resource.
      *
-     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View|\Illuminate\Http\Response
+     * @return Application|Factory|View
      */
     public function index()
     {
@@ -27,7 +31,7 @@ class NewsController extends Controller
     /**
      * Show the form for creating a new resource.
      *
-     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View|\Illuminate\Http\Response
+     * @return Application|Factory|View
      */
     public function create()
     {
@@ -39,15 +43,22 @@ class NewsController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param CreateNews $request
+     * @param CreateNews|null $request
+     * @param News|null $news
      * @return RedirectResponse
      */
-    public function store(CreateNews $request): RedirectResponse
+    public function store(CreateNews $request = null, $fields = null): RedirectResponse
     {
-        $fields = $request->only('category_id', 'title', 'content', 'image', 'status');
+        if (is_null($fields)) {
+            $fields = $request->only('category_id', 'title', 'content', 'image', 'status');
 
-        $news = new News();
-        $news->fill($fields)->save();
+            $news = new News();
+            $news->fill($fields)->save();
+        } else {
+            $news = new News();
+            $news->fill(['category_id' => $fields['category_id'], 'title' => $fields['title'],
+                'content' => $fields['description'], 'image' => null, 'status' => 'published'])->save();
+        }
         if ($news) {
             return redirect()->route('news.index');
         } else return back();
@@ -57,7 +68,7 @@ class NewsController extends Controller
      * Display the specified resource.
      *
      * @param int $id
-     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View|\Illuminate\Http\Response
+     * @return Application|Factory|View
      */
     public function show(int $id)
     {
@@ -70,8 +81,8 @@ class NewsController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param int $id
-     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View|\Illuminate\Http\Response
+     * @param News $news
+     * @return Application|Factory|View
      */
     public function edit(News $news)
     {

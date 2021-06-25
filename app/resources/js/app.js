@@ -30,3 +30,25 @@ Vue.component('example-component', require('./components/ExampleComponent.vue').
 const app = new Vue({
     el: '#app',
 });
+document.addEventListener("DOMContentLoaded", function() {
+    const parseButtons = document.querySelectorAll(".btn-primary");
+    parseButtons.forEach((button) => {
+        button.addEventListener('click', () => {
+            (
+                async () => {
+                    const response = await fetch('/parser/add_news', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json;charset=utf-8',
+                            'X-CSRF-TOKEN': button.getAttribute('data-csrf')
+                        },
+                        body: JSON.stringify({
+                            id: button.getAttribute('data-id'),
+                        })
+                    });
+                    const answer = await response.json();
+                }
+            )();
+        })
+    })
+});
