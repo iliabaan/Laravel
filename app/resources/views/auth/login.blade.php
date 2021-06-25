@@ -63,7 +63,7 @@
                                     <button type="submit" class="btn btn-primary">
                                         {{ __('Войти') }}
                                     </button>
-
+                                    <a href="{{ Route('vkLogin') }}">Войти через ВК</a>
                                     @if (Route::has('password.request'))
                                         <a class="btn btn-link" href="{{ route('password.request') }}">
                                             {{ __('Забыли пароль?') }}

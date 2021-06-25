@@ -1,8 +1,10 @@
 <?php
 
+use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\CommentsController;
 use App\Http\Controllers\OrdersController;
 use App\Http\Controllers\NewsController;
+use App\Http\Controllers\ParserController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Admin\NewsController as AdminNewsController;
@@ -40,6 +42,10 @@ Route::get('/news/by_categories/{id}', [NewsController::class, 'by_categories'])
 Route::get('order', [NewsController::class, 'order'])
     ->name('news.order');
 
+Route::get('/parser', [ParserController::class, 'index'])
+    ->name('admin.parser');
+Route::post('/parser/get_news/', [ParserController::class, 'getNews']);
+
 /**
  * Admin Routing
  */
@@ -58,5 +64,8 @@ Route::post('addComment', [CommentsController::class, 'store']);
 Route::post('addOrder', [OrdersController::class, 'store']);
 
 Auth::routes();
+
+Route::get('auth/vk', [LoginController::class, 'loginVK'])->name('vkLogin');
+Route::get('auth/vk/response', [LoginController::class, 'responseVK'])->name('responseVK');
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');

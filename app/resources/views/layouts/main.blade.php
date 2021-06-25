@@ -24,6 +24,7 @@
                 font-size: 3.5rem;
             }
         }
+
         .news__block {
             display: flex;
             flex-direction: column;
@@ -57,20 +58,24 @@
                         @endif
 
                         @if (Route::has('register'))
-                                <li><a href="{{ route('register') }}" class="text-white">Регистрация</a></li>
+                            <li><a href="{{ route('register') }}" class="text-white">Регистрация</a></li>
                         @endif
                     @else
                         <li class="nav-item dropdown">
-                            <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
-                                {{ Auth::user()->name }}
+                            <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button"
+                               data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
+                                {{ \Illuminate\Support\Facades\Auth::user()->name }}
                             </a>
 
                             <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                                 <a class="dropdown-item border-1" href="{{ route('logout') }}"
                                    onclick="event.preventDefault();
                                                      document.getElementById('logout-form').submit();">
-                                    {{ __('Logout') }}
+                                    {{ __('Выйти') }}
                                 </a>
+                                @if(Auth::user()->is_admin)
+                                    <a href="{{ route('news.index') }}" class="dropdown-item border-1">Админка</a>
+                                @endif
 
                                 <form id="logout-form" action="{{ route('logout') }}" method="POST">
                                     @csrf
@@ -92,9 +97,10 @@
                     <circle cx="12" cy="13" r="4"/>
                 </svg>
                 <div>
-                <a href="{{ route('news') }}">Все новости</a>
+                    <a href="{{ route('news') }}">Все новости</a>
                     @foreach($newsCategories as $category)
-                       <span style="color: #a0aec0">/</span> <a href="{{ route('news.by_categories', ['id' => $category->id]) }}">{{ucfirst($category->title)}}</a>
+                        <span style="color: #a0aec0">/</span> <a
+                            href="{{ route('news.by_categories', ['id' => $category->id]) }}">{{ucfirst($category->title)}}</a>
                     @endforeach
                     <span style="color: #a0aec0">/ </span><a href="{{ route('news.order') }}">Заказ</a>
                 </div>
