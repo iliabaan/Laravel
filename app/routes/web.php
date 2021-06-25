@@ -3,9 +3,11 @@
 use App\Http\Controllers\CommentsController;
 use App\Http\Controllers\OrdersController;
 use App\Http\Controllers\NewsController;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Admin\NewsController as AdminNewsController;
 use App\Http\Controllers\Admin\CategoryController as AdminCategoryController;
+use App\Http\Controllers\Admin\UserController as AdminUserController;
 
 /*
 |--------------------------------------------------------------------------
@@ -18,9 +20,7 @@ use App\Http\Controllers\Admin\CategoryController as AdminCategoryController;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+Route::get('/', [NewsController::class, 'index']);
 
 /**
  * News Routing
@@ -44,9 +44,10 @@ Route::get('order', [NewsController::class, 'order'])
  * Admin Routing
  */
 
-Route::group(['prefix' => 'admin'], function () {
+Route::group(['prefix' => 'admin', 'middleware' => ['auth', 'is.admin']], function () {
     Route::resource('/category', AdminCategoryController::class);
     Route::resource('/news', AdminNewsController::class);
+    Route::resource('/user', AdminUserController::class);
 });
 
 /**
@@ -55,3 +56,7 @@ Route::group(['prefix' => 'admin'], function () {
 
 Route::post('addComment', [CommentsController::class, 'store']);
 Route::post('addOrder', [OrdersController::class, 'store']);
+
+Auth::routes();
+
+Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
