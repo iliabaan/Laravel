@@ -7,7 +7,7 @@
         <div class="btn-toolbar mb-2 mb-md-0">
             <div class="btn-group me-2">
                 <a href="{{route('news.create')}}" class="btn btn-sm btn-outline-secondary">Добавить новость</a>
-                <a href="/parser" class="btn btn-sm btn-outline-secondary">Спарсить новости</a>
+                <a href="{{ route('source.parseAll') }}" class="btn btn-sm btn-outline-secondary">Спарсить новости</a>
             </div>
         </div>
     </div>

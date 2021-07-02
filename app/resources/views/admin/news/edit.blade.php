@@ -39,7 +39,7 @@
         </div>
         <div class="form-group">
             <label for="description">Описание *</label>
-            <textarea class="form-control" name="content" id="content">{!! $news->content !!}</textarea>
+            <textarea name="content" id="editor" class="form-control">{!! $news->content !!}</textarea>
         </div>
         <div class="form-group">
             <label for="status">Статус</label>
@@ -52,4 +52,15 @@
         <br>
         <button class="btn btn-success" type="submit">Редактировать новость</button>
     </form>
+    @push('js')
+        <script src="{{ asset('js/ckeditor5/ckeditor.js') }}"
+                type="text/javascript" charset="utf-8"></script>
+        <script>
+            ClassicEditor
+                .create(document.querySelector('#editor'))
+                .catch(error => {
+                    console.error(error);
+                });
+        </script>
+    @endpush
 @endsection

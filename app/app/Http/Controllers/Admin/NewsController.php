@@ -9,10 +9,8 @@ use App\Models\News;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
-use function Couchbase\basicDecoderV1;
 
 class NewsController extends Controller
 {
@@ -44,10 +42,10 @@ class NewsController extends Controller
      * Store a newly created resource in storage.
      *
      * @param CreateNews|null $request
-     * @param News|null $news
+     * @param null $fields
      * @return RedirectResponse
      */
-    public function store(CreateNews $request = null, $fields = null): RedirectResponse
+    public function store(CreateNews $request, $fields = null): RedirectResponse
     {
         if (is_null($fields)) {
             $fields = $request->only('category_id', 'title', 'content', 'image', 'status');
@@ -67,13 +65,13 @@ class NewsController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param int $id
+     * @param News $news
      * @return Application|Factory|View
      */
-    public function show(int $id)
+    public function show(News $news)
     {
         return view('admin.news.show', [
-            'news' => News::find($id),
+            'news' => $news,
         ]);
 
     }

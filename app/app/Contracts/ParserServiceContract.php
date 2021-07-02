@@ -4,7 +4,9 @@
 namespace App\Contracts;
 
 
+use App\Models\Source;
+
 interface ParserServiceContract
 {
-    public function getNews(string $url): array;
+    public function getNews(Source $source): void;
 }

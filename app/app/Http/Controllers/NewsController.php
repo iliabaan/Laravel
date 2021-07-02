@@ -14,7 +14,7 @@ class NewsController extends Controller
         return view('news.index', [
             'newsList' => News::where(['status' => 'published'])
                 ->with('category')
-                ->get(),
+                ->get()->sortByDesc('created_at'),
             'newsCategories' => Category::all()
         ]);
     }
