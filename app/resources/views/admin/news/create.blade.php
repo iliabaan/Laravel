@@ -1,7 +1,6 @@
 @extends('layouts.admin')
 @section('title') Добавление новости @parent @stop
 @section('content')
-
     <div
         class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
         <h1 class="h2">Создать новость</h1>
@@ -51,7 +50,7 @@
         </div>
         <div class="form-group">
             <label for="content">Описание *</label>
-            <textarea class="form-control" name="content" id="content"> {!! old('content') !!}</textarea>
+            <textarea name="content" id="editor" class="form-control">{!! old('content') !!}</textarea>
             @if($errors->has('content'))
                 <div class="alert alert-danger mt-2">
                     @foreach($errors->get('content') as $error)
@@ -71,4 +70,15 @@
         <br>
         <button class="btn btn-success" type="submit">Добавить новость</button>
     </form>
+    @push('js')
+        <script src="{{ asset('js/ckeditor5/ckeditor.js') }}"
+                type="text/javascript" charset="utf-8"></script>
+        <script>
+            ClassicEditor
+                .create(document.querySelector('#editor'))
+                .catch(error => {
+                    console.error(error);
+                });
+        </script>
+    @endpush
 @endsection

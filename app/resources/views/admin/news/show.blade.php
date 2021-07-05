@@ -17,6 +17,6 @@
         </div>
     </div>
     <div>
-        <p>{{ $news->content }}</p>
+        <p>{!! $news->content !!}</p>
     </div>
 @endsection

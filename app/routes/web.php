@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Admin\SourceController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\CommentsController;
 use App\Http\Controllers\OrdersController;
@@ -42,10 +43,6 @@ Route::get('/news/by_categories/{id}', [NewsController::class, 'by_categories'])
 Route::get('order', [NewsController::class, 'order'])
     ->name('news.order');
 
-Route::get('/parser', [ParserController::class, 'index'])
-    ->name('admin.parser');
-Route::post('/parser/get_news/', [ParserController::class, 'getNews']);
-
 /**
  * Admin Routing
  */
@@ -54,6 +51,9 @@ Route::group(['prefix' => 'admin', 'middleware' => ['auth', 'is.admin']], functi
     Route::resource('/category', AdminCategoryController::class);
     Route::resource('/news', AdminNewsController::class);
     Route::resource('/user', AdminUserController::class);
+    Route::post('/source/{source}', [SourceController::class, 'parse'])->name('source.parse');
+    Route::get('/source/parse_all', [SourceController::class, 'parseAll'])->name('source.parseAll');
+    Route::resource('/source', SourceController::class);
 });
 
 /**

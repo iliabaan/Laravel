@@ -26,7 +26,9 @@ class CreateNews extends FormRequest
         return [
             'category_id' => ['required', 'integer'],
             'title' => ['required', 'string', 'min:5', 'max:190'],
-            'content' => ['required']
+            'content' => ['required'],
+            'image' => ['sometimes'],
+            'status' => ['required']
         ];
     }
 }

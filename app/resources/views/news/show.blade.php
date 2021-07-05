@@ -11,7 +11,7 @@
         <div class="mt-5">
             <h3>{{ $news->title }}</h3>
             <p class="muted h6">Категория: {{$news->category->title}}</p>
-            <p class="fs-5">{{ $news->content }}</p>
+            <p class="fs-5">{!! $news->content !!}</p>
         </div>
     </div>
     <div class="comments__block m-auto mt-5 w-75">

@@ -61,33 +61,27 @@
             <div class="position-sticky pt-3">
                 <ul class="nav flex-column">
                     <li class="nav-item">
-                        <a class="nav-link active" aria-current="page" href="#">
+                        <a class="nav-link @if(request()->routeIs("news.*")) active @endif" aria-current="page" href="{{ route('news.index') }}">
                             <span data-feather="home"></span>
                             Новости
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="{{ route('category.index') }}">
+                        <a class="nav-link @if(request()->routeIs("category.*")) active @endif" href="{{ route('category.index') }}">
                             <span data-feather="file"></span>
                             Категории
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="{{ route('user.index') }}">
-                            <span data-feather="shopping-cart"></span>
+                        <a class="nav-link @if(request()->routeIs("user.*")) active @endif" href="{{ route('user.index') }}">
+                            <span data-feather="user"></span>
                             Пользователи
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#">
+                        <a class="nav-link @if(request()->routeIs("source.*")) active @endif" href="{{ route('source.index') }}">
                             <span data-feather="bar-chart-2"></span>
-                            Reports
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#">
-                            <span data-feather="layers"></span>
-                            Integrations
+                            Ресурсы
                         </a>
                     </li>
                 </ul>
@@ -133,9 +127,8 @@
     </div>
 </div>
 
-
+@stack('js')
 <script src="https://getbootstrap.com/docs/5.0/dist/js/bootstrap.bundle.min.js"></script>
-
 <script src="https://cdn.jsdelivr.net/npm/feather-icons@4.28.0/dist/feather.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/chart.js@2.9.4/dist/Chart.min.js"></script>
 <script src="https://getbootstrap.com/docs/5.0/examples/dashboard/dashboard.js"></script>
